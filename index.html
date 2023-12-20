@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD</title>
+    <link rel="stylesheet" href="./css/all.min.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body class=" text-white">
+    <nav class="fixed-top bg-dark text-center d-flex justify-content-center align-items-center">
+        <i class="fa-solid fa-cookie-bite fs-3 text-danger pe-1"></i>
+        <h1 class=" text-warning  ">My Links Bcookie <span class="text-danger fw-bolder ">.</span></h1>
+    </nav>
+    <section class="main container pt-5 text-muted mt-5 ">
+        <h3 id="current-product" class=" text-bg-warning text-center mb-5"></h3>
+        <div class="bookmark-form pb-5 text-white  position-relative">
+            <div id="warningBox" class=" warning-msg position-absolute bg-body-tertiary bg-opacity-50 d-flex justify-content-center align-items-center text-black">
+                <h2 class="text-center d-flex align-items-center" id="warningBoxMsg"></h2>
+            </div>
+            <div>
+                <div class="mb-3 text-center">
+                <label for="websiteName" class="form-label "><i class="fa-solid fa-book pe-3 fs-6 text-light-emphasis"></i>Website's Name:</label>
+                <input type="text" class="form-control text-center" id="websiteName" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3 text-center">
+                <label for="websiteURL" class="form-label "><i class="fa-solid fa-link pe-3 fs-6 text-light-emphasis"></i>URL:</label>
+                <input type="text" class="form-control text-center" id="websiteURL">
+                </div>
+                
+                <div class="mb-3 text-center">
+                    <label for="websiteNote" class="form-label "><i class="fa-regular fa-clipboard pe-3 fs-6 text-light-emphasis"></i>Note:</label>
+                    <textarea class="form-control text-center" id="websiteNote" rows="3"></textarea>
+                </div>
+                
+                <div class="text-center">
+                <button id="addWebsite-btn" onclick="addBookmark()" type="submit" class="btn btn-lg mt-4  btn-danger ">Submit</button>
+                <button id="update-btn" onclick="edit(editID)" type="submit" class="disabled btn btn-lg mt-4  btn-warning">Edit Bookmark</button>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="product-table pb-5 pt-5 ">
+
+            <table class="table text-center ">
+                <thead >
+                <tr >
+                    <th class="bg-body-secondary" scope="col ">Index</th>
+                    <th class="bg-body-secondary" scope="col">Website's Name</th>
+                    <th class="bg-body-secondary" scope="col">Website's URL</th>
+                    <th class="bg-body-secondary" scope="col">Note</th>
+                    <th class="bg-body-secondary" scope="col">Visit</th>
+                    <th class="bg-body-secondary" scope="col">Update</th>
+                    <th class="bg-body-secondary" scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody id="table-row" class="table-group-divider  break-word">
+                <tr >
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+    <script src="./js/all.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/index.js"></script>
+</body>
+</html>

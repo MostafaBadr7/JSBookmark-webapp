@@ -1,0 +1,67 @@
+* {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: rgba(0, 0, 0, 1)
+}
+
+.hideCurrentEditProduct {
+    opacity: 0;
+    pointer-events: none;
+    transition: all 1.5s;
+}
+
+.break-word {
+    max-width: 100%;
+    word-break: break-all;
+}
+
+.noBreak-word {
+    word-break: normal;
+}
+
+.bookmark-form textarea {
+    resize: vertical;
+    max-height: 5rem;
+    min-height: 2rem;
+}
+
+.bookmark-form .warning-msg {
+    width: 300px;
+    height: 300px;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 95%;
+
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(9.4px);
+    -webkit-backdrop-filter: blur(9.4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    z-index: 999;
+    transition: all 1s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.disappear {
+    opacity: 0 !important;
+    top: 75% !important;
+    display: none !important;
+    transform: scale(2, 2);
+}
+
+.display {
+    opacity: 1 !important;
+    pointer-events: all;
+    top: 35% !important;
+    transition: 1s;
+}
+
+#current-product {
+    transition: all 1.5s;
+}
