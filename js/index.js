@@ -1,9 +1,8 @@
-console.log("hi");
 
 // Global Variables //.........................................................................................
-var websiteName = document.getElementById('websiteName');
-var websiteURL = document.getElementById('websiteURL');
-var websiteNote = document.getElementById('websiteNote');
+var websiteNameInput = document.getElementById('websiteName');
+var websiteURLInput = document.getElementById('websiteURL');
+var websiteNoteInput = document.getElementById('websiteNote');
 var crudBookmarksArray = [];                                                    //Array to use the saved links
 var bookmarksHtmlLines;
 var tableRow = document.getElementById('table-row');
@@ -23,9 +22,8 @@ var warningBox = document.getElementById('warningBox');                         
         file:///D:/Programing/Route/Front/HTML/Lectures/transition
                                 http://127.55.125.256
 */
-var regExURL = /^(?:(?:https?)|(?:ftp)|(?:file)):\/\/\/?(?:(?:(?:[A-Za-z]:){1}|(?:[a-zA-Z:-]{1,100}\.[\w]{1,50}\.?[a-zA-Z]{2,10}))|(?:(?:\d{1,3}\.){3}\d{1,3}(?::(?=\d{1,4}))?))[\w\-@%\+.~#\?\&\/\=]{0,256}$/g;
-var regExName = /^([a-zA-Z][\w\-@%\+.~#?&\/=]*\w*){3,75}/g;                     // Regex for site's name
-console.log(regExURL.test("https://www.w3schools.com/howto/howto_js_scroll_to_top.asp"));
+var regExURL = /^((https?)|(ftp)|(file)):\/\/\/?((([A-Za-z]:){1}|([a-zA-Z:-]{1,100}\d*\.\w{1,50}\.?[a-zA-Z]{2,10}))|((\d{1,3}\.){3}\d{1,3}(:(?=\d{1,4}))?))[\w-@%+.~#\?&\/=_]*$/;
+var regExName = /^([a-zA-Z][\w\-@%\+.~#?&\/=]*\w*){3,75}/;                     // Regex for site's name
 
 //Warm-Up Display//............................................................................................
 
@@ -39,9 +37,9 @@ displayBookmarks();
 function addBookmark() {
     // Get user input
     var Bookmark = {
-        websiteName: websiteName.value.trim(),
-        websiteURL: websiteURL.value.trim(),
-        websiteNote: websiteNote.value.trim()
+        'websiteName': websiteNameInput.value.trim(),
+        'websiteURL': websiteURLInput.value.trim(),
+        'websiteNote': websiteNoteInput.value.trim()
     };
 
     // Validate the input then submit 
@@ -105,27 +103,48 @@ function updateBookmark(i) {
 // submit z editied bookmark
 function edit(editID) {
     var Bookmark = {
-        'websiteName': websiteName.value,
-        'websiteURL': websiteURL.value,
-        'websiteNote': websiteNote.value
+        'websiteName': websiteNameInput.value.trim(),
+        'websiteURL': websiteURLInput.value.trim(),
+        'websiteNote': websiteNoteInput.value.trim()
     }
-    if (validateBookmark(Bookmark) === true) {
-        crudBookmarksArray.splice(editID - 1, 1, Bookmark);                 //editID sent on update bookmark button click / (-1) to get z index
-        localStorage.setItem("crud-Bookmarks", JSON.stringify(crudBookmarksArray));
-        displayBookmarks();
-        resetForm();
-        editID = 0;                                                         //editID = 0 bcase it's global variable
+
+    if (crudBookmarksArray[editID - 1].websiteName != Bookmark.websiteName) {          //If name chngd chck URL
+        if (crudBookmarksArray[editID - 1].websiteURL != Bookmark.websiteURL) {        //If URL changed validate it -- else update the name
+            if (validateBookmark(Bookmark) === true) {
+                crudBookmarksArray.splice(editID - 1, 1, Bookmark);                 //editID sent on update bookmark button click / (-1) to get the index
+                localStorage.setItem("crud-Bookmarks", JSON.stringify(crudBookmarksArray));
+                displayBookmarks();
+                resetForm();
+            }                                                           //editID = 0 indicate zere is no current edition
+        } else {
+            if (regExName.test(Bookmark.websiteName) == true) {
+                crudBookmarksArray.splice(editID - 1, 1, Bookmark);                 //editID sent on update bookmark button click / (-1) to get z index
+                localStorage.setItem("crud-Bookmarks", JSON.stringify(crudBookmarksArray));
+                displayBookmarks();
+                resetForm();
+            } else {
+                alertMsg("Please enter a valid Name");
+            }
+        }
+    } else {
+        if (validateBookmark(Bookmark) === true) {
+            crudBookmarksArray.splice(editID - 1, 1, Bookmark);                 //editID sent on update bookmark button click / (-1) to get the index
+            localStorage.setItem("crud-Bookmarks", JSON.stringify(crudBookmarksArray));
+            displayBookmarks();
+            resetForm();
+        }
     }
     disableButton(mainUpdateBtn, submitBtn);
+    editID = 0;
 }
 
 //Automation Functions//.........................................................................................
 
 // Reset inputs after any operations
 function resetForm() {
-    websiteName.value = "";
-    websiteURL.value = "";
-    websiteNote.value = "";
+    websiteNameInput.value = "";
+    websiteURLInput.value = "";
+    websiteNoteInput.value = "";
 }
 // Mv vw port to input area
 function goToForm() {
@@ -139,19 +158,32 @@ function goToTable() {
 }
 // To show validation msg t user
 function alertMsg(msg) {
+    goToForm();
     warningBoxMsg.innerHTML = msg;
     warningBox.classList.add('display');
     setTimeout(() => {
         warningBox.classList.remove('display');
+        warningBoxMsg.innerHTML = "";
     }, "3000");
 }
+
 function validateBookmark(Bookmark) {
-    goToForm();
+    // Validate URL
+    if (regExURL.test(Bookmark.websiteURL) === false) {                     //chck if URL valid
+        alertMsg("Please enter a valid URL");
+        return false;                                                       //Rtrn t stp fnction nd t use rtrn in anthr fnction
+    } else {
+        for (var i = 0; i < crudBookmarksArray.length; i++) {               //chck if z URL alrdy exst.
+            if (Bookmark.websiteURL == crudBookmarksArray[i].websiteURL) {
+                alertMsg("Already Exist!");
+                return false;
+            }
+        }
+    }
+
+    // Validate site name nd note
     if (!Bookmark.websiteURL | !Bookmark.websiteName) {                     //If input url or name empty
         alertMsg("Please fill<br>URL & Name");
-        return false;                                                       //Rtrn t stp fnction nd t use in anthr fnction
-    } else if (regExURL.test(Bookmark.websiteURL) === false) {
-        alertMsg("Please enter a valid URL");
         return false;
     } else if (regExName.test(Bookmark.websiteName) === false) {
         alertMsg("Please enter a valid Name");
@@ -159,17 +191,11 @@ function validateBookmark(Bookmark) {
     } else if (Bookmark.websiteNote.length > 75) {
         alertMsg("Too big note");
         return false;
-    } else if (1) {                                                         //For loop chcks if url alrdy exst
-        for (var i = 0; i < crudBookmarksArray.length; i++) {
-            if (Bookmark.websiteURL == crudBookmarksArray[i].websiteURL) {
-                alertMsg("Already Exist!");
-                return false;
-            }
-        }
     } else {
         return true;                                                        //Aftr all chcks retrn true
     }
 }
+
 // Disble edit button - enble add bookmark button - hide currenly editing bookmark name
 function disableButton(disable, enable) {
     disable.classList.add("disabled");                                      //Disble bttn aftr done

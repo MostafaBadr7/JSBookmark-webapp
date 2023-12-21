@@ -65,3 +65,38 @@ body {
 #current-product {
     transition: all 1.5s;
 }
+
+
+/* .rotate {
+    animation: rotation 0.4s 2ms infinite linear;
+    z-index: -1;
+}
+
+@keyframes rotation {
+    from {
+        transform: translate(1px, 1px);
+        transform-origin: center;
+    }
+
+    to {
+        transform: translate(2px, 2px);
+        transform-origin: center;
+    }
+} */
+
+/* @keyframes rotation2 {
+    from {
+        transform: translate(350px, 0px);
+        transform-origin: center;
+    }
+
+    to {
+        transform: translate(0px, 0px);
+        transform-origin: center;
+    }
+} */
+
+.rotate:hover,
+nav span:hover {
+    color: green !important;
+}
