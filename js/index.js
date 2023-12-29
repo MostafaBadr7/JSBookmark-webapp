@@ -179,13 +179,13 @@ searchBtn.addEventListener("click", () => {
                         <td >${crudBookmarksArray[i - 1].websiteNote}</td>
                         <td  class"text-center "><button onclick="window.open('${
                           crudBookmarksArray[i - 1].websiteURL
-                        }', '_blank');" type="button" class=" btn btn-outline-primary noBreak-word">Visit Website</button></td>
+                        }', '_blank');" type="button" class="js-btn  btn btn-outline-primary  ">Visit-Website</button></td>
                         <td  class"text-center "><button onclick="updateBookmark(${
                           i - 1
-                        })" type="button" class="btn btn-outline-warning noBreak-word">Update</button></td>
+                        })" type="button" class="js-btn btn btn-outline-warning noBreak-word">Update</button></td>
                         <td class"text-center "><button onclick="deleteBookmark(${
                           i - 1
-                        })" type="button" class="btn btn-outline-danger noBreak-word">Delete</button></td>
+                        })" type="button"js-btn  class="btn btn-outline-danger noBreak-word">Delete</button></td>
                         </div>
             
                     </tr>

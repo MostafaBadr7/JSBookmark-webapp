@@ -65,6 +65,10 @@ body {
 #current-product {
     transition: all 1.5s;
 }
+.name, .note{
+    width: 25% !important;
+    min-width: 100px !important;
+}           
 
 
 /* .rotate {
