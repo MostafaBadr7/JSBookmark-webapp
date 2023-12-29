@@ -1,0 +1,21 @@
+@media screen and(max-width:900px){
+    table{
+        font-size: 0.2rem !important;
+    }
+    .URL{
+        width:100% !important;
+
+    }
+}
+@media screen and(max-width:500px){
+    table{
+        font-size: 0.2rem;
+    }
+    .search-box{
+        width:100px !important;
+    }
+    .URL{
+        width:200px !important;
+
+    }
+}
